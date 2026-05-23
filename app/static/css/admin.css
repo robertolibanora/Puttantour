@@ -17,6 +17,11 @@
 
 .sil-app--admin .sil-header__title {
   color: #4a3d6b;
+  letter-spacing: 0.1em;
+}
+
+.sil-app--admin .sil-eyebrow:not(:has(a))::before {
+  background: linear-gradient(90deg, #7c6aad, rgba(124, 106, 173, 0.25));
 }
 
 .sil-app--admin .sil-eyebrow {
@@ -25,6 +30,10 @@
 
 .sil-app--admin .sil-title {
   color: #4a3d6b;
+}
+
+.sil-app--admin .sil-title::after {
+  background: linear-gradient(90deg, #7c6aad 0%, rgba(124, 106, 173, 0.12) 100%);
 }
 
 .sil-app--admin .sil-btn {
@@ -70,4 +79,90 @@
 
 .sil-back-link:hover {
   color: #4a3d6b;
+}
+
+.sil-panel--sectioned {
+  padding: 0;
+  overflow: hidden;
+}
+
+.sil-panel--sectioned > .sil-section-label {
+  margin: 0;
+  padding: 15px 20px 13px;
+  border-bottom: 0.5px solid var(--sil-hairline-soft);
+  background: rgba(251, 242, 236, 0.55);
+}
+
+.sil-panel--sectioned > .sil-form,
+.sil-panel--sectioned > .sil-empty {
+  padding: 18px 20px 20px;
+}
+
+.sil-panel--sectioned > .sil-empty {
+  text-align: left;
+  line-height: 1.45;
+}
+
+.sil-app--admin .sil-panel--sectioned > .sil-section-label {
+  background: rgba(240, 232, 255, 0.72);
+  border-bottom-color: rgba(124, 106, 173, 0.14);
+}
+
+.sil-rules-layout {
+  display: grid;
+  gap: 12px;
+  margin: -2px 18px 20px;
+}
+
+.sil-rules-layout .sil-panel {
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .sil-rules-layout {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 14px;
+    align-items: start;
+    margin-bottom: 24px;
+  }
+
+  .sil-rules-layout__list {
+    order: 1;
+  }
+
+  .sil-rules-layout__form {
+    order: 2;
+  }
+
+  .sil-rules-layout .sil-btn--block {
+    width: auto;
+  }
+}
+
+@media (max-width: 719px) {
+  .sil-rules-layout .sil-rule {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'pts title'
+      'action action';
+    gap: 8px 12px;
+    padding: 16px 20px;
+  }
+
+  .sil-rules-layout .sil-rule__pts {
+    grid-area: pts;
+  }
+
+  .sil-rules-layout .sil-rule__title {
+    grid-area: title;
+    align-self: center;
+  }
+
+  .sil-rules-layout .sil-inline-form {
+    grid-area: action;
+  }
+
+  .sil-rules-layout .sil-inline-form .sil-btn {
+    width: 100%;
+  }
 }

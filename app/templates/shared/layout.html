@@ -3,6 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    (function () {
+      var standalone =
+        ['standalone', 'fullscreen', 'minimal-ui'].some(function (mode) {
+          return window.matchMedia('(display-mode: ' + mode + ')').matches;
+        }) || window.navigator.standalone === true;
+      if (!standalone) return;
+      var meta = document.querySelector('meta[name="viewport"]');
+      if (meta) {
+        meta.setAttribute(
+          'content',
+          'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
+        );
+      }
+      document.documentElement.classList.add('is-standalone');
+    })();
+  </script>
   <meta name="description" content="Classifica live, profilo giocatore e gestione punti.">
   <meta name="theme-color" content="#f4acb7">
   <meta name="color-scheme" content="light">

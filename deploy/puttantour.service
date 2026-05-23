@@ -1,0 +1,15 @@
+[Unit]
+Description=PUTTANTOUR Flask App
+After=network.target
+
+[Service]
+User=noira
+Group=www-data
+WorkingDirectory=/var/www/Puttantour
+EnvironmentFile=/var/www/Puttantour/.env
+ExecStart=/var/www/Puttantour/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8999 run:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

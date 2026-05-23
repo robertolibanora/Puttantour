@@ -91,6 +91,13 @@ html.is-offline .sil-live__dot {
   background: var(--sil-danger);
 }
 
+html.is-standalone,
+html.is-standalone body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 @media (display-mode: standalone) {
   .sil-header {
     padding-top: calc(18px + env(safe-area-inset-top, 0px));

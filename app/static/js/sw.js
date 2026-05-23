@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'points-game-v2';
+const CACHE_VERSION = 'puttantour-v3';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const OFFLINE_URL = '/offline';
@@ -31,7 +31,12 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((key) => key.startsWith('points-game-') && key !== STATIC_CACHE && key !== RUNTIME_CACHE)
+          .filter(
+            (key) =>
+              (key.startsWith('puttantour-') || key.startsWith('points-game-')) &&
+              key !== STATIC_CACHE &&
+              key !== RUNTIME_CACHE,
+          )
           .map((key) => caches.delete(key)),
       ),
     ).then(() => self.clients.claim()),

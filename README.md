@@ -1,4 +1,4 @@
-# Points Game App
+# PUTTANTOUR
 
 Mini web app Flask per un gioco a punti: l'admin/giudice assegna eventi e punti, gli utenti vedono classifica e punteggio.
 
@@ -51,7 +51,7 @@ In produzione servi l'app dietro HTTPS (obbligatorio per installazione su dispos
 ## Deploy veloce VPS
 
 ```bash
-cd /var/www/points-game
+cd /var/www/Puttantour
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

@@ -17,7 +17,7 @@ def create_app():
     app.config['ADMIN_USERNAME'] = os.getenv('ADMIN_USERNAME', 'admin').strip().lower()
     app.config['ADMIN_PASSWORD'] = os.getenv('ADMIN_PASSWORD', 'admin123')
     app.config['DATABASE_PATH'] = str(resolve_database_path(project_root, db_configured))
-    app.config['APP_NAME'] = os.getenv('APP_NAME', 'Points Game')
+    app.config['APP_NAME'] = os.getenv('APP_NAME', 'PUTTANTOUR')
 
     app.teardown_appcontext(close_db)
 

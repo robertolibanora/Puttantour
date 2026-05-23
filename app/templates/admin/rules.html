@@ -4,14 +4,25 @@
 <section class="sil-hero sil-hero--tight">
   <p class="sil-eyebrow">Pannello giudice</p>
   <h1 class="sil-title">Regole</h1>
-  <p class="sil-lead">
-    Crea ed elimina le regole usate per assegnare i punti.
-    <a href="{{ url_for('admin.classifica') }}">Vai alla classifica</a>.
-  </p>
 </section>
 
-<div class="sil-grid sil-grid--2">
-  <div class="sil-panel sil-panel--flush-list">
+<div class="sil-rules-layout">
+  <div class="sil-panel sil-panel--sectioned sil-rules-layout__form">
+    <p class="sil-section-label">Nuova regola</p>
+    <form method="post" class="sil-form">
+      <div class="sil-field">
+        <label class="sil-field__label" for="title">Descrizione</label>
+        <input class="sil-input" id="title" type="text" name="title" placeholder="Azione / evento" required>
+      </div>
+      <div class="sil-field">
+        <label class="sil-field__label" for="points">Punti (negativi per penalità)</label>
+        <input class="sil-input" id="points" type="number" name="points" value="1" required>
+      </div>
+      <button type="submit" class="sil-btn sil-btn--inline sil-btn--no-mt sil-btn--block">Crea regola</button>
+    </form>
+  </div>
+
+  <div class="sil-panel sil-panel--sectioned sil-rules-layout__list">
     <p class="sil-section-label">Regole attive</p>
     {% if rules %}
       {% for r in rules %}
@@ -25,23 +36,8 @@
         </div>
       {% endfor %}
     {% else %}
-      <p class="sil-empty">Nessuna regola attiva. Aggiungine una a destra.</p>
+      <p class="sil-empty">Nessuna regola attiva. Creane una nel modulo sopra.</p>
     {% endif %}
-  </div>
-
-  <div class="sil-panel">
-    <p class="sil-section-label">Nuova regola</p>
-    <form method="post" class="sil-form">
-      <div class="sil-field">
-        <label class="sil-field__label" for="title">Descrizione</label>
-        <input class="sil-input" id="title" type="text" name="title" placeholder="Azione / evento" required>
-      </div>
-      <div class="sil-field">
-        <label class="sil-field__label" for="points">Punti (negativi per penalità)</label>
-        <input class="sil-input" id="points" type="number" name="points" value="1" required>
-      </div>
-      <button type="submit" class="sil-btn sil-btn--inline sil-btn--no-mt">Crea regola</button>
-    </form>
   </div>
 </div>
 {% endblock %}
