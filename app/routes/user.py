@@ -52,6 +52,14 @@ def classifica():
     )
 
 
+@bp.route('/pubblica')
+def classifica_pubblica():
+    return render_template(
+        'shared/classifica_public.html',
+        players=player_totals(),
+    )
+
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if session.get('player_id'):
@@ -69,7 +77,7 @@ def register():
             flash('Le password non coincidono.', 'error')
         elif not re.fullmatch(r'[a-zA-Z0-9._-]{3,32}', username):
             flash('Il nome utente deve essere 3–32 caratteri (lettere, numeri, . _ -).', 'error')
-        elif username == current_app.config['ADMIN_USERNAME']:
+        elif username in current_app.config['ADMIN_JUDGES']:
             flash('Questo nome utente non è disponibile.', 'error')
         else:
             db = get_db()
@@ -109,10 +117,11 @@ def login():
         password = request.form.get('password', '')
         if not username or not password:
             flash('Inserisci nome utente e password.', 'error')
-        elif username == current_app.config['ADMIN_USERNAME']:
-            if password == current_app.config['ADMIN_PASSWORD']:
+        elif username in current_app.config['ADMIN_JUDGES']:
+            if password == current_app.config['ADMIN_JUDGES'][username]:
                 session.pop('player_id', None)
                 session['is_admin'] = True
+                session['admin_username'] = username
                 session.permanent = True
                 flash('Accesso giudice effettuato.', 'success')
                 return redirect(url_for('admin.rules'))
@@ -137,6 +146,7 @@ def login():
 @bp.route('/logout')
 def logout():
     session.pop('is_admin', None)
+    session.pop('admin_username', None)
     session.pop('player_id', None)
     flash('Logout effettuato.', 'success')
     return redirect(url_for('user.login'))

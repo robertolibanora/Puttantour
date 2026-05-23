@@ -58,3 +58,22 @@
   text-transform: uppercase;
   color: var(--sil-mauve);
 }
+
+.sil-app--public .sil-main {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.sil-public-note {
+  margin: 4px 22px 0;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--sil-ink-soft);
+}
+
+.sil-public-note a {
+  color: var(--sil-danger);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

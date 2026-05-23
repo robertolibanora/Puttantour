@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask import Flask
 
 from .db import close_db, init_db, resolve_database_path
+from .judges import load_admin_judges
 
 
 def create_app():
@@ -14,8 +15,7 @@ def create_app():
 
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret')
-    app.config['ADMIN_USERNAME'] = os.getenv('ADMIN_USERNAME', 'admin').strip().lower()
-    app.config['ADMIN_PASSWORD'] = os.getenv('ADMIN_PASSWORD', 'admin123')
+    app.config['ADMIN_JUDGES'] = load_admin_judges()
     app.config['DATABASE_PATH'] = str(resolve_database_path(project_root, db_configured))
     app.config['APP_NAME'] = os.getenv('APP_NAME', 'PUTTANTOUR')
 

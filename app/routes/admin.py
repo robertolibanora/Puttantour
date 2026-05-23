@@ -140,8 +140,8 @@ def add_score(player_id):
         return redirect(url_for('admin.player_detail', player_id=player_id))
 
     db.execute(
-        'INSERT INTO score_events (player_id, rule_id, points, note) VALUES (?, ?, ?, ?)',
-        (player_id, rule_id, points, note or None),
+        'INSERT INTO score_events (player_id, rule_id, points, note, judge_username) VALUES (?, ?, ?, ?, ?)',
+        (player_id, rule_id, points, note or None, session.get('admin_username')),
     )
     db.commit()
     flash('Punteggio aggiornato.', 'success')

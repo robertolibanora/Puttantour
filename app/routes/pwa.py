@@ -52,7 +52,7 @@ def manifest():
                 'name': 'Classifica',
                 'short_name': 'Classifica',
                 'description': 'Apri la classifica live',
-                'url': '/classifica',
+                'url': '/pubblica',
                 'icons': [{'src': '/static/icons/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}],
             },
             {

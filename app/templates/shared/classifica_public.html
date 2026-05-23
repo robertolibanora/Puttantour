@@ -1,0 +1,36 @@
+{% extends 'shared/layout.html' %}
+{% block title %}Classifica live — {{ app_name }}{% endblock %}
+{% block body_class %}sil-app--user sil-app--public{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+{% endblock %}
+{% block header %}
+<header class="sil-header">
+  <div class="sil-header__brand">
+    <span class="sil-serif sil-header__title">{{ app_name }}</span>
+    <span class="sil-mono sil-header__est">classifica live</span>
+  </div>
+  <div class="sil-live" aria-label="Classifica in diretta">
+    <span class="sil-live__dot"></span>
+    <span class="sil-live__label">Live</span>
+  </div>
+</header>
+{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">In diretta</p>
+  <h1 class="sil-title">Classifica</h1>
+  <p class="sil-lead">Graduatoria aggiornata in tempo reale.</p>
+</section>
+
+{% set manage_links = false %}
+{% include 'shared/classifica_table.html' %}
+
+<p class="sil-public-note">
+  Sei un giocatore?
+  <a href="{{ url_for('user.login') }}">Accedi</a>
+  o
+  <a href="{{ url_for('user.register') }}">registrati</a>.
+</p>
+{% endblock %}
+{% block dock %}{% endblock %}

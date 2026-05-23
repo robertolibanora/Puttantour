@@ -63,7 +63,15 @@ def init_db():
     );
     ''')
     _migrate_players(db)
+    _migrate_score_events(db)
     db.commit()
+
+
+def _migrate_score_events(db):
+    info = db.execute('PRAGMA table_info(score_events)').fetchall()
+    colnames = {row[1] for row in info}
+    if 'judge_username' not in colnames:
+        db.execute('ALTER TABLE score_events ADD COLUMN judge_username TEXT')
 
 
 def player_totals(*, include_disqualified=True):
