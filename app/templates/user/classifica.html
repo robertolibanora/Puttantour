@@ -1,0 +1,31 @@
+{% extends 'user/base.html' %}
+{% from 'shared/partials/avatar.html' import sil_avatar %}
+{% block title %}Classifica — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">Classifica live</p>
+  <h1 class="sil-title">Classifica</h1>
+  {% if my_rank %}
+    <p class="sil-lead">La tua posizione: <strong>#{{ my_rank }}</strong></p>
+  {% else %}
+    <p class="sil-lead">Consulta la graduatoria aggiornata.</p>
+  {% endif %}
+</section>
+
+{% if current_player and my_rank %}
+<div class="sil-me-card">
+  <span class="sil-me-card__tag">✦ Tu</span>
+  {{ sil_avatar(current_player.name, 'md', true) }}
+  <div class="sil-me-card__body">
+    <p class="sil-row__name">{{ current_player.name }}</p>
+  </div>
+  <div class="sil-me-card__rank">
+    <span class="sil-me-card__rank-val">#{{ my_rank }}</span>
+    <span class="sil-me-card__rank-label">posizione</span>
+  </div>
+</div>
+{% endif %}
+
+{% set manage_links = false %}
+{% include 'shared/classifica_table.html' %}
+{% endblock %}

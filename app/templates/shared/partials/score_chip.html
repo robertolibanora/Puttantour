@@ -1,0 +1,6 @@
+{% macro sil_score(points) %}
+<span class="sil-chip{% if points < 0 %} sil-chip--neg{% endif %}">
+  <span class="sil-chip__val">{% if points > 0 %}+{% endif %}{{ points }}</span>
+  <span class="sil-chip__unit">PT</span>
+</span>
+{% endmacro %}

@@ -1,0 +1,28 @@
+{% extends 'user/auth_base.html' %}
+{% block title %}Accedi — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">Accesso</p>
+  <h1 class="sil-title">Accedi</h1>
+</section>
+
+<div class="sil-panel sil-panel--relative sil-panel--narrow">
+  {% include 'shared/partials/ornament.html' %}
+  <p class="sil-mono sil-invite-label">✦ Invito</p>
+  <p class="sil-lead sil-lead--tight">Giocatori e giudice usano la stessa pagina di accesso.</p>
+  <form method="post" class="sil-form sil-form--spaced">
+    <div class="sil-field">
+      <label class="sil-field__label" for="username">Nome utente</label>
+      <input class="sil-input" id="username" type="text" name="username" required autofocus autocomplete="username">
+    </div>
+    <div class="sil-field">
+      <label class="sil-field__label" for="password">Password</label>
+      <input class="sil-input" id="password" type="password" name="password" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="sil-btn">Entra</button>
+  </form>
+  <p class="sil-lead sil-lead--after">
+    Non hai un account giocatore? <a href="{{ url_for('user.register') }}">Registrati</a>.
+  </p>
+</div>
+{% endblock %}

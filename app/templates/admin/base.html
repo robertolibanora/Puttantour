@@ -1,0 +1,17 @@
+{% extends 'shared/layout.html' %}
+{% block body_class %}sil-app--admin sil-has-dock{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+{% block header %}
+<header class="sil-header">
+  <a href="{{ url_for('admin.rules') }}" class="sil-header__brand">
+    <span class="sil-serif sil-header__title">{{ app_name }}</span>
+    <span class="sil-mono sil-header__est">giudice</span>
+  </a>
+  <span class="sil-judge-badge">Giudice</span>
+</header>
+{% endblock %}
+{% block dock %}
+  {% include 'admin/partials/bottombar.html' %}
+{% endblock %}

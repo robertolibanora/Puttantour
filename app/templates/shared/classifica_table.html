@@ -1,0 +1,31 @@
+{% from 'shared/partials/score_chip.html' import sil_score %}
+{% from 'shared/partials/avatar.html' import sil_avatar %}
+{% if players %}
+  <div class="sil-sheet">
+    {% set rank = namespace(n=0) %}
+    {% for p in players %}
+      {% if not p.disqualified %}{% set rank.n = rank.n + 1 %}{% endif %}
+      {% if manage_links %}
+        <a class="sil-row{% if current_player and current_player.id == p.id %} sil-row--me{% endif %}"
+           href="{{ url_for('admin.player_detail', player_id=p.id) }}">
+      {% else %}
+        <div class="sil-row{% if current_player and current_player.id == p.id %} sil-row--me{% endif %}">
+      {% endif %}
+        <span class="sil-row__rank">{% if p.disqualified %}—{% else %}{{ rank.n }}{% endif %}</span>
+        {{ sil_avatar(p.name, 'sm', current_player and current_player.id == p.id and not p.disqualified) }}
+        <div class="sil-row__body">
+          <p class="sil-row__name">
+            {{ p.name }}
+            {% if not manage_links and current_player and current_player.id == p.id %}
+              <span class="sil-tag sil-tag--tu">Tu</span>
+            {% endif %}
+            {% if p.disqualified %}<span class="sil-tag sil-tag--warn">Squalificato</span>{% endif %}
+          </p>
+        </div>
+        {{ sil_score(p.total_points) }}
+      {% if manage_links %}</a>{% else %}</div>{% endif %}
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="sil-empty">Nessun giocatore in classifica.</p>
+{% endif %}

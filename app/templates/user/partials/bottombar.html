@@ -1,0 +1,15 @@
+<div class="sil-dock-wrap">
+  <nav class="sil-dock" aria-label="Navigazione principale">
+    <a href="{{ url_for('user.classifica') }}"
+       class="sil-dock__item{% if request.endpoint == 'user.classifica' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">✦</span>
+      <span class="sil-dock__label">Classifica</span>
+    </a>
+    <a href="{{ url_for('user.profilo') }}"
+       class="sil-dock__item{% if request.endpoint == 'user.profilo' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">◍</span>
+      <span class="sil-dock__label">Profilo</span>
+    </a>
+    <a href="{{ url_for('user.logout') }}" class="sil-dock__item sil-dock__logout" title="Esci" aria-label="Esci">⇲</a>
+  </nav>
+</div>

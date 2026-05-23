@@ -1,0 +1,5 @@
+{% macro sil_avatar(name, size='sm', ring=false) %}
+{% set parts = name.split() %}
+{% set initials = ((parts[0][0] if parts else '?') ~ (parts[1][0] if parts|length > 1 else ''))|upper %}
+<span class="sil-avatar sil-avatar--{{ size }}{% if ring %} sil-avatar--ring{% endif %}" aria-hidden="true">{{ initials }}</span>
+{% endmacro %}

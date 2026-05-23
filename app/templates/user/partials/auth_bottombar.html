@@ -1,0 +1,14 @@
+<div class="sil-dock-wrap">
+  <nav class="sil-dock" aria-label="Accesso">
+    <a href="{{ url_for('user.login') }}"
+       class="sil-dock__item{% if request.endpoint == 'user.login' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">↪</span>
+      <span class="sil-dock__label">Accedi</span>
+    </a>
+    <a href="{{ url_for('user.register') }}"
+       class="sil-dock__item{% if request.endpoint == 'user.register' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">✚</span>
+      <span class="sil-dock__label">Registrati</span>
+    </a>
+  </nav>
+</div>

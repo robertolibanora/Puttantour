@@ -1,0 +1,60 @@
+.sil-app--user {
+  --sil-bg: #f1ebe6;
+  --sil-accent: var(--sil-cherry);
+}
+
+.sil-app--user .sil-header {
+  background: var(--sil-cream);
+}
+
+.sil-me-card {
+  margin: 0 18px 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--sil-powder) 0%, var(--sil-pink) 100%);
+  border: 0.5px solid var(--sil-cherry);
+  position: relative;
+  overflow: hidden;
+}
+
+.sil-me-card__tag {
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  font-family: var(--sil-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  color: var(--sil-danger);
+}
+
+.sil-me-card__rank {
+  margin-left: auto;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.sil-me-card__rank-val {
+  display: block;
+  font-family: var(--sil-serif);
+  font-size: 34px;
+  font-style: italic;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--sil-ink);
+}
+
+.sil-me-card__body {
+  margin-top: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sil-me-card__rank-label {
+  font-family: var(--sil-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  color: var(--sil-mauve);
+}

@@ -1,0 +1,73 @@
+.sil-app--admin {
+  --sil-bg: #f4ecee;
+  --sil-accent: var(--sil-mauve);
+}
+
+.sil-app--admin {
+  background:
+    radial-gradient(1200px 600px at 90% -10%, var(--sil-pink) 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 30%, #e8e0f0 0%, transparent 50%),
+    radial-gradient(800px 700px at 50% 120%, var(--sil-alabaster) 0%, transparent 60%),
+    var(--sil-bg);
+}
+
+.sil-app--admin .sil-header {
+  background: rgba(251, 242, 236, 0.92);
+}
+
+.sil-app--admin .sil-header__title {
+  color: #4a3d6b;
+}
+
+.sil-app--admin .sil-eyebrow {
+  color: #6b5b95;
+}
+
+.sil-app--admin .sil-title {
+  color: #4a3d6b;
+}
+
+.sil-app--admin .sil-btn {
+  background: #7c6aad;
+}
+
+.sil-app--admin .sil-btn:hover {
+  background: #5a4a8a;
+}
+
+.sil-app--admin .sil-btn--soft {
+  background: #e4dff0;
+  color: var(--sil-ink);
+}
+
+.sil-app--admin .sil-btn--soft:hover {
+  background: #d4cce8;
+}
+
+.sil-app--admin .sil-dock__item.is-active {
+  background: rgba(124, 106, 173, 0.14);
+}
+
+.sil-app--admin .sil-dock__item.is-active .sil-dock__glyph {
+  color: #5a4a8a;
+}
+
+.sil-judge-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #f0e8ff;
+  color: #5a4a8a;
+}
+
+.sil-back-link {
+  color: var(--sil-mauve);
+  font-weight: 600;
+}
+
+.sil-back-link:hover {
+  color: #4a3d6b;
+}

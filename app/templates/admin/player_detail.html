@@ -1,0 +1,85 @@
+{% extends 'admin/base.html' %}
+{% from 'shared/partials/score_chip.html' import sil_score %}
+{% block title %}{{ player.name }} — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow"><a class="sil-back-link" href="{{ url_for('admin.classifica') }}">← Classifica</a></p>
+  <h1 class="sil-title sil-title--sm">{{ player.name }}</h1>
+  {% if player.username %}
+    <p class="sil-lead">@{{ player.username }}</p>
+  {% endif %}
+  {% if player.disqualified %}
+    <p class="sil-lead"><span class="sil-tag sil-tag--warn">Squalificato</span></p>
+  {% endif %}
+  <p class="sil-lead"><span class="sil-score-hero">{{ total }}</span> punti</p>
+</section>
+
+<div class="sil-grid sil-grid--2">
+  <div class="sil-panel">
+    <p class="sil-section-label">Modifica punteggio</p>
+    <form method="post" action="{{ url_for('admin.add_score', player_id=player.id) }}" class="sil-form">
+      <div class="sil-field">
+        <label class="sil-field__label" for="rule_id">Regola</label>
+        <select class="sil-select" id="rule_id" name="rule_id">
+          <option value="">Punti manuali</option>
+          {% for r in rules %}
+            <option value="{{ r.id }}">{{ r.points }} pt — {{ r.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="sil-field">
+        <label class="sil-field__label" for="custom_points">Punti manuali (se non scegli una regola)</label>
+        <input class="sil-input" id="custom_points" type="number" name="custom_points" value="1">
+      </div>
+      <div class="sil-field">
+        <label class="sil-field__label" for="note">Nota opzionale</label>
+        <input class="sil-input" id="note" type="text" name="note" placeholder="es. confermato dal gruppo">
+      </div>
+      <div class="sil-btn-row">
+        <button type="submit" name="action" value="add" class="sil-btn sil-btn--no-mt">Aggiungi punti</button>
+        <button type="submit" name="action" value="remove" class="sil-btn sil-btn--soft sil-btn--no-mt">Rimuovi punti</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="sil-panel">
+    <p class="sil-section-label">Stato in gara</p>
+    {% if player.disqualified %}
+      <p class="sil-lead">Questo giocatore è fuori classifica.</p>
+      <form method="post" action="{{ url_for('admin.requalify', player_id=player.id) }}">
+        <button type="submit" class="sil-btn sil-btn--no-mt">Riabilita in classifica</button>
+      </form>
+    {% else %}
+      <p class="sil-lead">La squalifica lo esclude dalla classifica dei giocatori.</p>
+      <form method="post" action="{{ url_for('admin.disqualify', player_id=player.id) }}"
+            onsubmit="return confirm('Squalificare {{ player.name }}?');">
+        <button type="submit" class="sil-btn sil-btn--danger sil-btn--no-mt">Squalifica</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+
+<p class="sil-section-label">Storico eventi</p>
+<div class="sil-panel sil-panel--flush-list">
+  {% if events %}
+    {% for e in events %}
+      <div class="sil-event sil-event--admin">
+        {{ sil_score(e.points) }}
+        <div class="sil-event__body">
+          <p class="sil-event__title">{{ e.rule_title or 'Punti manuali' }}</p>
+          {% if e.note %}<span class="sil-event__note">{{ e.note }}</span>{% endif %}
+          <span class="sil-event__meta">{{ e.created_at }}</span>
+        </div>
+        <form method="post"
+              action="{{ url_for('admin.delete_event', player_id=player.id, event_id=e.id) }}"
+              class="sil-inline-form"
+              onsubmit="return confirm('Rimuovere questo evento dallo storico?');">
+          <button type="submit" class="sil-btn sil-btn--danger sil-btn--small sil-btn--inline">Elimina</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="sil-empty">Nessun evento registrato.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'user/base.html' %}
+{% from 'shared/partials/score_chip.html' import sil_score %}
+{% from 'shared/partials/avatar.html' import sil_avatar %}
+{% block title %}Profilo — {{ app_name }}{% endblock %}
+{% block content %}
+{% set name_parts = player.name.split() %}
+<div class="sil-profile-card">
+  {% include 'shared/partials/ornament.html' %}
+  <p class="sil-eyebrow">Il tuo profilo</p>
+  <div class="sil-profile-card__top">
+    <div class="sil-profile-card__names">
+      <span class="sil-serif sil-profile-card__first">{{ name_parts[0] }}</span>
+      {% if name_parts|length > 1 %}
+        <span class="sil-serif sil-profile-card__rest">{{ name_parts[1:]|join(' ') }}</span>
+      {% endif %}
+      {% if player.username %}
+        <span class="sil-mono sil-profile-card__user">@{{ player.username }}</span>
+      {% endif %}
+    </div>
+    {{ sil_avatar(player.name, 'md', true) }}
+  </div>
+  <div class="sil-profile-card__score">
+    <span class="sil-profile-card__big">{{ total }}</span>
+    <span class="sil-profile-card__label">punti</span>
+    {% if player.disqualified %}
+      <span class="sil-badge-pill sil-badge-pill--danger">Squalificato — fuori classifica</span>
+    {% elif my_rank %}
+      <span class="sil-badge-pill">#{{ my_rank }} in classifica</span>
+    {% endif %}
+  </div>
+</div>
+
+<p class="sil-section-label">Ultimi movimenti</p>
+<div class="sil-panel sil-panel--flush-list">
+  {% if events %}
+    {% for e in events %}
+      <div class="sil-event">
+        {{ sil_score(e.points) }}
+        <div class="sil-event__body">
+          <p class="sil-event__title">{{ e.rule_title or 'Punti manuali' }}</p>
+          {% if e.note %}<span class="sil-event__note">{{ e.note }}</span>{% endif %}
+          <span class="sil-event__meta">{{ e.created_at }}</span>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="sil-empty">Nessun movimento ancora. I punti li assegna l’admin.</p>
+  {% endif %}
+</div>
+{% endblock %}

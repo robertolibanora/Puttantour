@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% block title %}Classifica — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">Pannello giudice</p>
+  <h1 class="sil-title">Classifica</h1>
+  <p class="sil-lead">Clicca su un giocatore per aggiungere o togliere punti o squalificarlo.</p>
+</section>
+
+{% set manage_links = true %}
+{% include 'shared/classifica_table.html' %}
+{% endblock %}
