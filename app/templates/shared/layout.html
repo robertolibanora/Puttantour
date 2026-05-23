@@ -2,11 +2,24 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Classifica live, profilo giocatore e gestione punti.">
+  <meta name="theme-color" content="#f4acb7">
+  <meta name="color-scheme" content="light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="{{ app_name }}">
   <title>{% block title %}{{ app_name }}{% endblock %}</title>
+  <link rel="manifest" href="{{ url_for('pwa.manifest') }}">
+  <link rel="icon" href="{{ url_for('static', filename='icons/favicon-32.png') }}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{{ url_for('static', filename='icons/favicon-16.png') }}" sizes="16x16" type="image/png">
+  <link rel="icon" href="{{ url_for('static', filename='icons/icon.svg') }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/shared.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pwa.css') }}">
   {% block styles %}{% endblock %}
 </head>
 <body class="sil-app {% block body_class %}{% endblock %}">
@@ -24,5 +37,6 @@
     {% block content %}{% endblock %}
   </main>
   {% block dock %}{% endblock %}
+  {% include 'shared/partials/pwa_shell.html' %}
 </body>
 </html>

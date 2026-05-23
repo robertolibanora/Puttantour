@@ -1,0 +1,37 @@
+<div id="pwa-offline" class="sil-pwa-banner sil-pwa-banner--offline" hidden role="status" aria-live="polite">
+  <div class="sil-pwa-banner__body">
+    <p class="sil-pwa-banner__title">Sei offline</p>
+    <p class="sil-pwa-banner__text">Alcune funzioni potrebbero non essere disponibili.</p>
+  </div>
+</div>
+
+<div id="pwa-update" class="sil-pwa-banner sil-pwa-banner--update" hidden role="dialog" aria-labelledby="pwa-update-title">
+  <div class="sil-pwa-banner__body">
+    <p id="pwa-update-title" class="sil-pwa-banner__title">Aggiornamento disponibile</p>
+    <p class="sil-pwa-banner__text">Una nuova versione dell&apos;app è pronta.</p>
+  </div>
+  <div class="sil-pwa-banner__actions">
+    <button type="button" class="sil-pwa-btn sil-pwa-btn--primary" data-pwa-update>Aggiorna</button>
+    <button type="button" class="sil-pwa-btn sil-pwa-btn--ghost" data-pwa-update-dismiss>Più tardi</button>
+  </div>
+</div>
+
+<div id="pwa-install" class="sil-pwa-banner sil-pwa-banner--install" hidden role="dialog" aria-labelledby="pwa-install-title">
+  <img
+    class="sil-pwa-banner__icon"
+    src="{{ url_for('static', filename='icons/icon-192.png') }}"
+    width="40"
+    height="40"
+    alt=""
+    aria-hidden="true">
+  <div class="sil-pwa-banner__body">
+    <p id="pwa-install-title" class="sil-pwa-banner__title">Installa {{ app_name }}</p>
+    <p class="sil-pwa-banner__text">Aggiungi l&apos;app alla schermata home per un accesso rapido.</p>
+  </div>
+  <div class="sil-pwa-banner__actions">
+    <button type="button" class="sil-pwa-btn sil-pwa-btn--primary" data-pwa-install>Installa</button>
+    <button type="button" class="sil-pwa-btn sil-pwa-btn--ghost" data-pwa-dismiss>Non ora</button>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/pwa.js') }}" defer></script>

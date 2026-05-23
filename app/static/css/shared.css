@@ -95,7 +95,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 54px 22px 14px;
+  padding: calc(54px + env(safe-area-inset-top, 0px)) 22px 14px;
   background: var(--sil-cream);
   border-bottom: 0.5px solid var(--sil-hairline-soft);
 }

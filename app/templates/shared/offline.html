@@ -1,0 +1,17 @@
+{% extends 'shared/layout.html' %}
+{% block title %}Offline — {{ app_name }}{% endblock %}
+{% block body_class %}sil-app--user{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">Connessione</p>
+  <h1 class="sil-title">Sei offline</h1>
+</section>
+
+<div class="sil-panel sil-panel--relative sil-panel--narrow">
+  {% include 'shared/partials/ornament.html' %}
+  <p class="sil-lead sil-lead--tight">
+    Non c&apos;è connessione in questo momento. I contenuti salvati restano disponibili; per dati aggiornati torna online e ricarica.
+  </p>
+  <button type="button" class="sil-btn" onclick="window.location.reload()">Riprova</button>
+</div>
+{% endblock %}
