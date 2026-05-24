@@ -10,6 +10,9 @@
   {% else %}
     <p class="sil-lead">Consulta la graduatoria aggiornata.</p>
   {% endif %}
+  <p class="sil-public-note">
+    <a href="{{ url_for('user.regole') }}">Consulta tutte le regole del gioco</a>
+  </p>
 </section>
 
 {% if current_player and my_rank %}

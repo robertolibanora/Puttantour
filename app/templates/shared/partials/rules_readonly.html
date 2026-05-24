@@ -1,0 +1,10 @@
+{% if rules %}
+  {% for r in rules %}
+    <div class="sil-rule sil-rule--readonly">
+      <span class="sil-rule__pts{% if r.points < 0 %} sil-rule__pts--neg{% endif %}">{{ r.points }} pt</span>
+      <span class="sil-rule__title">{{ r.title }}</span>
+    </div>
+  {% endfor %}
+{% else %}
+  <p class="sil-empty">Nessuna regola attiva al momento.</p>
+{% endif %}

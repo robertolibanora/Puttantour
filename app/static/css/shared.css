@@ -750,6 +750,10 @@ a.sil-row:hover {
   font-weight: 600;
 }
 
+.sil-rule--readonly {
+  grid-template-columns: 72px 1fr;
+}
+
 /* Profile hero card */
 .sil-profile-card {
   margin: 14px 18px 18px;
@@ -949,5 +953,10 @@ a.sil-dock__item {
   .sil-rule {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .sil-rule--readonly {
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
   }
 }

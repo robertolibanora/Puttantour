@@ -5,6 +5,11 @@
       <span class="sil-dock__glyph" aria-hidden="true">✦</span>
       <span class="sil-dock__label">Classifica</span>
     </a>
+    <a href="{{ url_for('user.news') }}"
+       class="sil-dock__item{% if request.endpoint == 'user.news' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">◈</span>
+      <span class="sil-dock__label">News</span>
+    </a>
     <a href="{{ url_for('user.profilo') }}"
        class="sil-dock__item{% if request.endpoint == 'user.profilo' %} is-active{% endif %}">
       <span class="sil-dock__glyph" aria-hidden="true">◍</span>

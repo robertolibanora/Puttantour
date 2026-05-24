@@ -1,0 +1,33 @@
+{% extends 'user/base.html' %}
+{% from 'shared/partials/score_chip.html' import sil_score %}
+{% block title %}News — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow">In evidenza</p>
+  <h1 class="sil-title">News</h1>
+  <p class="sil-lead">I 5 eventi con più punti assegnati dai giudici.</p>
+</section>
+
+<p class="sil-section-label">Top eventi</p>
+<div class="sil-panel sil-panel--flush-list">
+  {% if events %}
+    {% for e in events %}
+      <div class="sil-event">
+        {{ sil_score(e.points) }}
+        <div class="sil-event__body">
+          <p class="sil-event__title">{{ e.player_name }}</p>
+          <span class="sil-event__note">{{ e.rule_title or 'Punti manuali' }}</span>
+          <span class="sil-event__meta">
+            {{ e.created_at }}
+            {% if e.judge_username %}
+              · Giudice {{ e.judge_username|capitalize }}
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="sil-empty">Nessun evento registrato ancora.</p>
+  {% endif %}
+</div>
+{% endblock %}

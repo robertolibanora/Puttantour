@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-from ..db import get_db, player_totals
+from ..db import active_rules, get_db, player_totals
 
 bp = Blueprint('admin', __name__)
 
@@ -49,10 +49,7 @@ def rules():
             db.commit()
             flash('Regola creata.', 'success')
             return redirect(url_for('admin.rules'))
-    rules_list = db.execute(
-        'SELECT * FROM rules WHERE active = 1 ORDER BY points DESC, title ASC',
-    ).fetchall()
-    return render_template('admin/rules.html', rules=rules_list)
+    return render_template('admin/rules.html', rules=active_rules())
 
 
 @bp.route('/regole/<int:rule_id>/elimina', methods=['POST'])
@@ -94,15 +91,12 @@ def player_detail(player_id):
         'SELECT COALESCE(SUM(points), 0) AS total FROM score_events WHERE player_id = ?',
         (player_id,),
     ).fetchone()['total']
-    rules_list = db.execute(
-        'SELECT * FROM rules WHERE active = 1 ORDER BY points DESC, title ASC',
-    ).fetchall()
     return render_template(
         'admin/player_detail.html',
         player=player,
         events=events,
         total=total,
-        rules=rules_list,
+        rules=active_rules(),
     )
 
 

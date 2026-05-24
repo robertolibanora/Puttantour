@@ -74,6 +74,23 @@ def _migrate_score_events(db):
         db.execute('ALTER TABLE score_events ADD COLUMN judge_username TEXT')
 
 
+def active_rules():
+    return get_db().execute(
+        'SELECT * FROM rules WHERE active = 1 ORDER BY points DESC, title ASC',
+    ).fetchall()
+
+
+def top_score_events(*, limit=5):
+    return get_db().execute('''
+        SELECT e.*, p.name AS player_name, r.title AS rule_title
+        FROM score_events e
+        JOIN players p ON p.id = e.player_id
+        LEFT JOIN rules r ON r.id = e.rule_id
+        ORDER BY e.points DESC, e.created_at DESC, e.id DESC
+        LIMIT ?
+    ''', (limit,)).fetchall()
+
+
 def player_totals(*, include_disqualified=True):
     where = '' if include_disqualified else 'WHERE COALESCE(p.disqualified, 0) = 0'
     return get_db().execute(f'''

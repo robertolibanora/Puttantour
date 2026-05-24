@@ -5,7 +5,7 @@ from functools import wraps
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from ..db import get_db, player_totals
+from ..db import active_rules, get_db, player_totals, top_score_events
 
 bp = Blueprint('user', __name__)
 
@@ -34,6 +34,18 @@ def index():
     if session.get('player_id'):
         return redirect(url_for('user.classifica'))
     return redirect(url_for('user.login'))
+
+
+@bp.route('/news')
+@player_required
+def news():
+    return render_template('user/news.html', events=top_score_events(limit=5))
+
+
+@bp.route('/regole')
+@player_required
+def regole():
+    return render_template('user/regole.html', rules=active_rules())
 
 
 @bp.route('/classifica')

@@ -1,0 +1,14 @@
+{% extends 'user/base.html' %}
+{% block title %}Regole — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="sil-hero sil-hero--tight">
+  <p class="sil-eyebrow"><a href="{{ url_for('user.classifica') }}">← Classifica</a></p>
+  <h1 class="sil-title">Regole</h1>
+  <p class="sil-lead">Elenco completo delle regole e dei punti assegnati dai giudici.</p>
+</section>
+
+<p class="sil-section-label">Regole attive</p>
+<div class="sil-panel sil-panel--flush-list">
+  {% include 'shared/partials/rules_readonly.html' %}
+</div>
+{% endblock %}
