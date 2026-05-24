@@ -131,6 +131,10 @@
   margin: 0;
 }
 
+.sil-rules-layout__form .sil-form > .sil-btn {
+  margin-top: 14px;
+}
+
 @media (min-width: 720px) {
   .sil-rules-layout {
     grid-template-columns: 1.1fr 0.9fr;
