@@ -7,40 +7,6 @@
   background: var(--sil-cream);
 }
 
-.sil-user-nav {
-  display: flex;
-  gap: 6px;
-  padding: 0 18px 12px;
-  background: var(--sil-cream);
-  border-bottom: 0.5px solid var(--sil-hairline-soft);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.sil-user-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.sil-user-nav__item {
-  flex: 1;
-  min-width: 0;
-  padding: 8px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-align: center;
-  text-decoration: none;
-  color: var(--sil-ink-soft);
-  white-space: nowrap;
-}
-
-.sil-user-nav__item.is-active {
-  background: var(--sil-powder);
-  color: var(--sil-ink);
-}
-
 .sil-dock--user .sil-dock__item {
   padding: 9px 4px 10px;
 }
