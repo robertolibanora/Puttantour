@@ -40,7 +40,7 @@
           <p class="sil-event__title">{{ e.rule_title or 'Punti manuali' }}</p>
           {% if e.note %}<span class="sil-event__note">{{ e.note }}</span>{% endif %}
           <span class="sil-event__meta">
-            {{ e.created_at }}
+            {{ e.created_at|rome_time }}
             {% if e.judge_username %}
               · Giudice {{ e.judge_username|capitalize }}
             {% endif %}

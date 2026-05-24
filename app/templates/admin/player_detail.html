@@ -68,7 +68,7 @@
         <div class="sil-event__body">
           <p class="sil-event__title">{{ e.rule_title or 'Punti manuali' }}</p>
           {% if e.note %}<span class="sil-event__note">{{ e.note }}</span>{% endif %}
-          <span class="sil-event__meta">{{ e.created_at }}</span>
+          <span class="sil-event__meta">{{ e.created_at|rome_time }}</span>
         </div>
         <form method="post"
               action="{{ url_for('admin.delete_event', player_id=player.id, event_id=e.id) }}"

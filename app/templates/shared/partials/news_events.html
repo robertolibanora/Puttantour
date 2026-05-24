@@ -6,8 +6,8 @@
       <div class="sil-event__body">
         <p class="sil-event__title">{{ e.player_name }}</p>
         <span class="sil-event__note">{{ e.rule_title or 'Punti manuali' }}</span>
-        <span class="sil-event__meta">
-          {{ e.created_at }}
+          <span class="sil-event__meta">
+            {{ e.created_at|rome_time }}
           {% if e.judge_username %}
             · Giudice {{ e.judge_username|capitalize }}
           {% endif %}
