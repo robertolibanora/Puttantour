@@ -1,0 +1,9 @@
+{% macro user_nav_item(endpoint, label, glyph, item_class) %}
+  <a href="{{ url_for(endpoint) }}"
+     class="{{ item_class }}{% if request.endpoint == endpoint %} is-active{% endif %}">
+    {% if glyph %}
+      <span class="sil-dock__glyph" aria-hidden="true">{{ glyph }}</span>
+    {% endif %}
+    <span class="{{ item_class }}__label">{{ label }}</span>
+  </a>
+{% endmacro %}

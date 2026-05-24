@@ -1,20 +1,10 @@
+{% from 'user/partials/user_nav.html' import user_nav_item %}
 <div class="sil-dock-wrap">
-  <nav class="sil-dock" aria-label="Navigazione principale">
-    <a href="{{ url_for('user.classifica') }}"
-       class="sil-dock__item{% if request.endpoint == 'user.classifica' %} is-active{% endif %}">
-      <span class="sil-dock__glyph" aria-hidden="true">✦</span>
-      <span class="sil-dock__label">Classifica</span>
-    </a>
-    <a href="{{ url_for('user.news') }}"
-       class="sil-dock__item{% if request.endpoint == 'user.news' %} is-active{% endif %}">
-      <span class="sil-dock__glyph" aria-hidden="true">◈</span>
-      <span class="sil-dock__label">News</span>
-    </a>
-    <a href="{{ url_for('user.profilo') }}"
-       class="sil-dock__item{% if request.endpoint == 'user.profilo' %} is-active{% endif %}">
-      <span class="sil-dock__glyph" aria-hidden="true">◍</span>
-      <span class="sil-dock__label">Profilo</span>
-    </a>
+  <nav class="sil-dock sil-dock--user" aria-label="Navigazione principale">
+    {{ user_nav_item('user.news', 'News', '◈', 'sil-dock__item') }}
+    {{ user_nav_item('user.classifica', 'Classifica', '✦', 'sil-dock__item') }}
+    {{ user_nav_item('user.regole', 'Regole', '§', 'sil-dock__item') }}
+    {{ user_nav_item('user.profilo', 'Profilo', '◍', 'sil-dock__item') }}
     <a href="{{ url_for('user.logout') }}" class="sil-dock__item sil-dock__logout" title="Esci" aria-label="Esci">⇲</a>
   </nav>
 </div>
