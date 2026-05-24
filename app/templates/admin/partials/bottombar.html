@@ -1,5 +1,10 @@
 <div class="sil-dock-wrap">
-  <nav class="sil-dock" aria-label="Navigazione giudice">
+  <nav class="sil-dock sil-dock--admin" aria-label="Navigazione giudice">
+    <a href="{{ url_for('admin.news') }}"
+       class="sil-dock__item{% if request.endpoint == 'admin.news' %} is-active{% endif %}">
+      <span class="sil-dock__glyph" aria-hidden="true">◈</span>
+      <span class="sil-dock__label">News</span>
+    </a>
     <a href="{{ url_for('admin.rules') }}"
        class="sil-dock__item{% if request.endpoint == 'admin.rules' %} is-active{% endif %}">
       <span class="sil-dock__glyph" aria-hidden="true">§</span>

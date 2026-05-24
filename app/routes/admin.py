@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-from ..db import active_rules, get_db, player_totals
+from ..db import active_rules, get_db, player_totals, top_score_events
 
 bp = Blueprint('admin', __name__)
 
@@ -64,6 +64,12 @@ def delete_rule(rule_id):
         db.commit()
         flash('Regola eliminata.', 'success')
     return redirect(url_for('admin.rules'))
+
+
+@bp.route('/news')
+@admin_required
+def news():
+    return render_template('admin/news.html', events=top_score_events(limit=5))
 
 
 @bp.route('/classifica')
