@@ -17,7 +17,7 @@
         <span class="sil-mono sil-profile-card__user">@{{ player.username }}</span>
       {% endif %}
     </div>
-    {{ sil_avatar(player.name, 'md', true) }}
+    {{ sil_avatar(player.name, 'md', true, player.avatar_emoji, player.avatar_bg) }}
   </div>
   <div class="sil-profile-card__score">
     <span class="sil-profile-card__big">{{ total }}</span>
@@ -29,6 +29,38 @@
     {% endif %}
   </div>
 </div>
+
+{% if not player.avatar_emoji or not player.avatar_bg %}
+<p class="sil-section-label">Avatar</p>
+<div class="sil-panel">
+  <p class="sil-lead sil-lead--tight">Scegli emoji e sfondo: potrai farlo una sola volta.</p>
+  <form method="post" action="{{ url_for('user.profilo_avatar') }}" class="sil-form sil-avatar-form">
+    <fieldset class="sil-avatar-picker">
+      <legend class="sil-field__label">Scegli emoji</legend>
+      <div class="sil-avatar-picker__grid sil-avatar-picker__grid--emoji">
+        {% for emoji in avatar_emojis %}
+          <label class="sil-avatar-picker__opt">
+            <input type="radio" name="avatar_emoji" value="{{ emoji }}" required>
+            <span class="sil-avatar-picker__face">{{ emoji }}</span>
+          </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    <fieldset class="sil-avatar-picker">
+      <legend class="sil-field__label">Scegli sfondo</legend>
+      <div class="sil-avatar-picker__grid sil-avatar-picker__grid--color">
+        {% for slug, label in avatar_bg_colors %}
+          <label class="sil-avatar-picker__opt sil-avatar-picker__opt--color" title="{{ label }}">
+            <input type="radio" name="avatar_bg" value="{{ slug }}" required>
+            <span class="sil-avatar-picker__swatch sil-avatar--bg-{{ slug }}"></span>
+          </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    <button type="submit" class="sil-btn">Conferma avatar</button>
+  </form>
+</div>
+{% endif %}
 
 <p class="sil-section-label">Ultimi movimenti</p>
 <div class="sil-panel sil-panel--flush-list">

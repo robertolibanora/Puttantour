@@ -571,6 +571,46 @@ textarea {
   box-shadow: 0 0 0 4px rgba(244, 172, 183, 0.33);
 }
 
+.sil-avatar--emoji {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.sil-avatar--emoji::after {
+  opacity: 0.35;
+}
+
+.sil-avatar--emoji.sil-avatar--sm {
+  font-size: 20px;
+}
+
+.sil-avatar--emoji.sil-avatar--md {
+  font-size: 26px;
+}
+
+.sil-avatar--bg-alabaster { background: var(--sil-alabaster); }
+.sil-avatar--bg-powder { background: var(--sil-powder); }
+.sil-avatar--bg-pink { background: var(--sil-pink); }
+.sil-avatar--bg-cherry { background: var(--sil-cherry); }
+.sil-avatar--bg-mauve { background: var(--sil-mauve); }
+.sil-avatar--bg-cream { background: var(--sil-cream); }
+.sil-avatar--bg-danger { background: var(--sil-danger); }
+.sil-avatar--bg-ink { background: var(--sil-ink); }
+
+.sil-avatar--bg-ink {
+  color: var(--sil-cream);
+}
+
+.sil-avatar--bg-danger {
+  color: var(--sil-cream);
+}
+
+.sil-avatar--bg-mauve {
+  color: var(--sil-cream);
+}
+
 /* Leaderboard */
 .sil-sheet {
   margin: 8px 18px 14px;

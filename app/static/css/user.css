@@ -90,3 +90,79 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+.sil-avatar-form {
+  gap: 18px;
+}
+
+.sil-avatar-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.sil-avatar-picker + .sil-avatar-picker {
+  margin-top: 4px;
+}
+
+.sil-avatar-picker__grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.sil-avatar-picker__grid--emoji {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.sil-avatar-picker__grid--color {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.sil-avatar-picker__opt {
+  position: relative;
+  cursor: pointer;
+}
+
+.sil-avatar-picker__opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.sil-avatar-picker__face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  border: 0.5px solid var(--sil-hairline);
+  background: var(--sil-paper);
+  font-size: 24px;
+  line-height: 1;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.sil-avatar-picker__swatch {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 0.5px solid var(--sil-hairline);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.sil-avatar-picker__opt input:checked + .sil-avatar-picker__face,
+.sil-avatar-picker__opt input:checked + .sil-avatar-picker__swatch {
+  box-shadow: 0 0 0 3px rgba(244, 172, 183, 0.45);
+  border-color: var(--sil-cherry);
+  transform: scale(1.04);
+}
+
+.sil-avatar-picker__opt input:focus-visible + .sil-avatar-picker__face,
+.sil-avatar-picker__opt input:focus-visible + .sil-avatar-picker__swatch {
+  outline: 2px solid var(--sil-cherry);
+  outline-offset: 2px;
+}

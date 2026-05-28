@@ -1,11 +1,10 @@
-import re
-import sqlite3
 from functools import wraps
 
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
-from ..db import active_rules, get_db, player_totals, top_score_events
+from ..avatars import AVATAR_BG_COLORS, AVATAR_BG_SLUGS, AVATAR_EMOJIS
+from ..db import active_rules, get_db, player_totals, recent_score_events
 
 bp = Blueprint('user', __name__)
 
@@ -25,7 +24,10 @@ def inject_user_globals():
     player = None
     pid = session.get('player_id')
     if pid:
-        player = get_db().execute('SELECT id, name FROM players WHERE id = ?', (pid,)).fetchone()
+        player = get_db().execute(
+            'SELECT id, name, avatar_emoji, avatar_bg FROM players WHERE id = ?',
+            (pid,),
+        ).fetchone()
     return {'current_player': player}
 
 
@@ -39,7 +41,7 @@ def index():
 @bp.route('/news')
 @player_required
 def news():
-    return render_template('user/news.html', events=top_score_events(limit=5))
+    return render_template('user/news.html', events=recent_score_events(limit=5))
 
 
 @bp.route('/regole')
@@ -72,50 +74,10 @@ def classifica_pubblica():
     )
 
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/register')
 def register():
-    if session.get('player_id'):
-        return redirect(url_for('user.classifica'))
-    if request.method == 'POST':
-        name = request.form.get('name', '').strip()
-        username = request.form.get('username', '').strip().lower()
-        password = request.form.get('password', '')
-        password2 = request.form.get('password2', '')
-        if not name or not username or not password:
-            flash('Compila tutti i campi obbligatori.', 'error')
-        elif len(password) < 6:
-            flash('La password deve essere di almeno 6 caratteri.', 'error')
-        elif password != password2:
-            flash('Le password non coincidono.', 'error')
-        elif not re.fullmatch(r'[a-zA-Z0-9._-]{3,32}', username):
-            flash('Il nome utente deve essere 3–32 caratteri (lettere, numeri, . _ -).', 'error')
-        elif username in current_app.config['ADMIN_JUDGES']:
-            flash('Questo nome utente non è disponibile.', 'error')
-        else:
-            db = get_db()
-            taken = db.execute(
-                'SELECT 1 FROM players WHERE username = ?',
-                (username,),
-            ).fetchone()
-            if taken:
-                flash('Questo nome utente è già in uso.', 'error')
-            elif db.execute('SELECT 1 FROM players WHERE name = ?', (name,)).fetchone():
-                flash('Questo nome in classifica è già usato. Scegline un altro.', 'error')
-            else:
-                try:
-                    db.execute(
-                        'INSERT INTO players (name, username, password_hash) VALUES (?, ?, ?)',
-                        (name, username, generate_password_hash(password)),
-                    )
-                    db.commit()
-                    row = db.execute('SELECT id FROM players WHERE username = ?', (username,)).fetchone()
-                    session['player_id'] = row['id']
-                    flash('Registrazione completata. Benvenuto in classifica.', 'success')
-                    return redirect(url_for('user.classifica'))
-                except sqlite3.IntegrityError:
-                    db.rollback()
-                    flash('Nome utente o nome in classifica già esistente.', 'error')
-    return render_template('user/register.html')
+    flash('Le iscrizioni sono chiuse.', 'error')
+    return redirect(url_for('user.login'))
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -194,4 +156,41 @@ def profilo():
         events=events,
         total=total,
         my_rank=my_rank,
+        avatar_emojis=AVATAR_EMOJIS,
+        avatar_bg_colors=AVATAR_BG_COLORS,
     )
+
+
+@bp.route('/profilo/avatar', methods=['POST'])
+@player_required
+def profilo_avatar():
+    db = get_db()
+    player = db.execute(
+        'SELECT avatar_emoji, avatar_bg FROM players WHERE id = ?',
+        (session['player_id'],),
+    ).fetchone()
+    if player['avatar_emoji'] and player['avatar_bg']:
+        flash('L’avatar non può essere modificato.', 'error')
+        return redirect(url_for('user.profilo'))
+
+    emoji = request.form.get('avatar_emoji', '').strip()
+    bg = request.form.get('avatar_bg', '').strip()
+    if emoji not in AVATAR_EMOJIS:
+        flash('Emoji non valida.', 'error')
+    elif bg not in AVATAR_BG_SLUGS:
+        flash('Colore non valido.', 'error')
+    else:
+        updated = db.execute(
+            '''
+            UPDATE players
+            SET avatar_emoji = ?, avatar_bg = ?
+            WHERE id = ? AND avatar_emoji IS NULL AND avatar_bg IS NULL
+            ''',
+            (emoji, bg, session['player_id']),
+        )
+        db.commit()
+        if updated.rowcount:
+            flash('Avatar scelto. La scelta è definitiva.', 'success')
+        else:
+            flash('L’avatar non può essere modificato.', 'error')
+    return redirect(url_for('user.profilo'))

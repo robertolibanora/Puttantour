@@ -27,6 +27,10 @@ def _migrate_players(db):
         db.execute('ALTER TABLE players ADD COLUMN password_hash TEXT')
     if 'disqualified' not in colnames:
         db.execute('ALTER TABLE players ADD COLUMN disqualified INTEGER DEFAULT 0')
+    if 'avatar_emoji' not in colnames:
+        db.execute('ALTER TABLE players ADD COLUMN avatar_emoji TEXT')
+    if 'avatar_bg' not in colnames:
+        db.execute('ALTER TABLE players ADD COLUMN avatar_bg TEXT')
     db.execute(
         'CREATE UNIQUE INDEX IF NOT EXISTS idx_players_username '
         'ON players(username) WHERE username IS NOT NULL'
@@ -41,6 +45,8 @@ def init_db():
         name TEXT NOT NULL UNIQUE,
         username TEXT,
         password_hash TEXT,
+        avatar_emoji TEXT,
+        avatar_bg TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -80,13 +86,13 @@ def active_rules():
     ).fetchall()
 
 
-def top_score_events(*, limit=5):
+def recent_score_events(*, limit=5):
     return get_db().execute('''
         SELECT e.*, p.name AS player_name, r.title AS rule_title
         FROM score_events e
         JOIN players p ON p.id = e.player_id
         LEFT JOIN rules r ON r.id = e.rule_id
-        ORDER BY e.points DESC, e.created_at DESC, e.id DESC
+        ORDER BY e.created_at DESC, e.id DESC
         LIMIT ?
     ''', (limit,)).fetchall()
 
@@ -95,12 +101,13 @@ def player_totals(*, include_disqualified=True):
     where = '' if include_disqualified else 'WHERE COALESCE(p.disqualified, 0) = 0'
     return get_db().execute(f'''
         SELECT p.id, p.name, COALESCE(p.disqualified, 0) AS disqualified,
+               p.avatar_emoji, p.avatar_bg,
                COALESCE(SUM(e.points), 0) AS total_points,
                COUNT(e.id) AS events_count
         FROM players p
         LEFT JOIN score_events e ON e.player_id = p.id
         {where}
-        GROUP BY p.id, p.name, p.disqualified
+        GROUP BY p.id, p.name, p.disqualified, p.avatar_emoji, p.avatar_bg
         ORDER BY COALESCE(p.disqualified, 0) ASC,
                  total_points DESC, events_count DESC, p.name ASC
     ''').fetchall()

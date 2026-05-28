@@ -27,10 +27,7 @@
 {% include 'shared/classifica_table.html' %}
 
 <p class="sil-public-note">
-  Sei un giocatore?
-  <a href="{{ url_for('user.login') }}">Accedi</a>
-  o
-  <a href="{{ url_for('user.register') }}">registrati</a>.
+  Sei un giocatore? <a href="{{ url_for('user.login') }}">Accedi</a>.
 </p>
 {% endblock %}
 {% block dock %}{% endblock %}

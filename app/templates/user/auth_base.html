@@ -1,5 +1,5 @@
 {% extends 'shared/layout.html' %}
-{% block body_class %}sil-app--user sil-has-dock{% endblock %}
+{% block body_class %}sil-app--user{% endblock %}
 {% block styles %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
 {% endblock %}
@@ -12,6 +12,4 @@
   <span class="sil-mono sil-header__tag">n.4</span>
 </header>
 {% endblock %}
-{% block dock %}
-  {% include 'user/partials/auth_bottombar.html' %}
-{% endblock %}
+{% block dock %}{% endblock %}
