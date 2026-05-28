@@ -1,12 +1,18 @@
 {% extends 'user/base.html' %}
 {% from 'shared/partials/score_chip.html' import sil_score %}
 {% from 'shared/partials/avatar.html' import sil_avatar %}
-{% block title %}Profilo — {{ app_name }}{% endblock %}
+{% block title %}{{ player.name }} — {{ app_name }}{% endblock %}
 {% block content %}
 {% set name_parts = player.name.split() %}
+<section class="sil-hero sil-hero--tight">
+  {% if not is_own_profile %}
+    <p class="sil-eyebrow"><a href="{{ url_for('user.classifica') }}">← Classifica</a></p>
+  {% endif %}
+</section>
+
 <div class="sil-profile-card">
   {% include 'shared/partials/ornament.html' %}
-  <p class="sil-eyebrow">Il tuo profilo</p>
+  <p class="sil-eyebrow">{% if is_own_profile %}Il tuo profilo{% else %}Profilo giocatore{% endif %}</p>
   <div class="sil-profile-card__top">
     <div class="sil-profile-card__names">
       <span class="sil-serif sil-profile-card__first">{{ name_parts[0] }}</span>
@@ -17,20 +23,20 @@
         <span class="sil-mono sil-profile-card__user">@{{ player.username }}</span>
       {% endif %}
     </div>
-    {{ sil_avatar(player.name, 'md', true, player.avatar_emoji, player.avatar_bg) }}
+    {{ sil_avatar(player.name, 'md', is_own_profile, player.avatar_emoji, player.avatar_bg) }}
   </div>
   <div class="sil-profile-card__score">
     <span class="sil-profile-card__big">{{ total }}</span>
     <span class="sil-profile-card__label">punti</span>
     {% if player.disqualified %}
       <span class="sil-badge-pill sil-badge-pill--danger">Squalificato — fuori classifica</span>
-    {% elif my_rank %}
-      <span class="sil-badge-pill">#{{ my_rank }} in classifica</span>
+    {% elif rank %}
+      <span class="sil-badge-pill">#{{ rank }} in classifica</span>
     {% endif %}
   </div>
 </div>
 
-{% if not player.avatar_emoji or not player.avatar_bg %}
+{% if is_own_profile and (not player.avatar_emoji or not player.avatar_bg) %}
 <p class="sil-section-label">Avatar</p>
 <div class="sil-panel">
   <p class="sil-lead sil-lead--tight">Scegli emoji e sfondo: potrai farlo una sola volta.</p>
@@ -81,7 +87,7 @@
       </div>
     {% endfor %}
   {% else %}
-    <p class="sil-empty">Nessun movimento ancora. I punti li assegna l’admin.</p>
+    <p class="sil-empty">Nessun movimento ancora.</p>
   {% endif %}
 </div>
 {% endblock %}

@@ -129,9 +129,42 @@ def logout():
 @bp.route('/profilo')
 @player_required
 def profilo():
-    player_id = session['player_id']
+    data = _load_player_profile(session['player_id'])
+    if not data:
+        flash('Profilo non trovato.', 'error')
+        return redirect(url_for('user.classifica'))
+    return render_template(
+        'user/profilo.html',
+        is_own_profile=True,
+        avatar_emojis=AVATAR_EMOJIS,
+        avatar_bg_colors=AVATAR_BG_COLORS,
+        **data,
+    )
+
+
+@bp.route('/giocatore/<int:player_id>')
+@player_required
+def player_profile(player_id):
+    if player_id == session['player_id']:
+        return redirect(url_for('user.profilo'))
+    data = _load_player_profile(player_id)
+    if not data:
+        flash('Giocatore non trovato.', 'error')
+        return redirect(url_for('user.classifica'))
+    return render_template(
+        'user/profilo.html',
+        is_own_profile=False,
+        avatar_emojis=None,
+        avatar_bg_colors=None,
+        **data,
+    )
+
+
+def _load_player_profile(player_id):
     db = get_db()
     player = db.execute('SELECT * FROM players WHERE id = ?', (player_id,)).fetchone()
+    if not player:
+        return None
     events = db.execute('''
         SELECT e.*, r.title AS rule_title
         FROM score_events e
@@ -144,21 +177,18 @@ def profilo():
         'SELECT COALESCE(SUM(points), 0) AS total FROM score_events WHERE player_id = ?',
         (player_id,),
     ).fetchone()['total']
-    my_rank = None
+    rank = None
     if not player['disqualified']:
         for i, p in enumerate(player_totals(), start=1):
             if p['id'] == player_id and not p['disqualified']:
-                my_rank = i
+                rank = i
                 break
-    return render_template(
-        'user/profilo.html',
-        player=player,
-        events=events,
-        total=total,
-        my_rank=my_rank,
-        avatar_emojis=AVATAR_EMOJIS,
-        avatar_bg_colors=AVATAR_BG_COLORS,
-    )
+    return {
+        'player': player,
+        'events': events,
+        'total': total,
+        'rank': rank,
+    }
 
 
 @bp.route('/profilo/avatar', methods=['POST'])
