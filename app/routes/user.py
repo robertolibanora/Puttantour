@@ -33,8 +33,10 @@ def inject_user_globals():
 
 @bp.route('/')
 def index():
+    if session.get('is_admin'):
+        return redirect(url_for('admin.news'))
     if session.get('player_id'):
-        return redirect(url_for('user.classifica'))
+        return redirect(url_for('user.news'))
     return redirect(url_for('user.login'))
 
 
@@ -83,9 +85,9 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if session.get('is_admin'):
-        return redirect(url_for('admin.rules'))
+        return redirect(url_for('admin.news'))
     if session.get('player_id'):
-        return redirect(url_for('user.classifica'))
+        return redirect(url_for('user.news'))
     if request.method == 'POST':
         username = request.form.get('username', '').strip().lower()
         password = request.form.get('password', '')
@@ -98,7 +100,7 @@ def login():
                 session['admin_username'] = username
                 session.permanent = True
                 flash('Accesso giudice effettuato.', 'success')
-                return redirect(url_for('admin.rules'))
+                return redirect(url_for('admin.news'))
             flash('Credenziali non valide.', 'error')
         else:
             db = get_db()
@@ -113,7 +115,7 @@ def login():
                 session.permanent = True
                 session['player_id'] = row['id']
                 flash('Accesso effettuato.', 'success')
-                return redirect(url_for('user.classifica'))
+                return redirect(url_for('user.news'))
     return render_template('shared/login.html')
 
 

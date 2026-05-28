@@ -29,7 +29,7 @@ def logout():
 @bp.route('')
 @admin_required
 def index():
-    return redirect(url_for('admin.rules'))
+    return redirect(url_for('admin.news'))
 
 
 @bp.route('/regole', methods=['GET', 'POST'])
