@@ -1,7 +1,9 @@
+import re
+import sqlite3
 from functools import wraps
 
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from ..avatars import AVATAR_BG_COLORS, AVATAR_BG_SLUGS, AVATAR_EMOJIS
 from ..db import active_rules, get_db, player_totals, recent_score_events
@@ -76,10 +78,54 @@ def classifica_pubblica():
     )
 
 
-@bp.route('/register')
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
-    flash('Le iscrizioni sono chiuse.', 'error')
-    return redirect(url_for('user.login'))
+    if session.get('is_admin'):
+        return redirect(url_for('admin.news'))
+    if session.get('player_id'):
+        return redirect(url_for('user.news'))
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        username = request.form.get('username', '').strip().lower()
+        password = request.form.get('password', '')
+        password2 = request.form.get('password2', '')
+        if not name or not username or not password:
+            flash('Compila tutti i campi obbligatori.', 'error')
+        elif len(password) < 6:
+            flash('La password deve essere di almeno 6 caratteri.', 'error')
+        elif password != password2:
+            flash('Le password non coincidono.', 'error')
+        elif not re.fullmatch(r'[a-zA-Z0-9._-]{3,32}', username):
+            flash('Il nome utente deve essere 3–32 caratteri (lettere, numeri, . _ -).', 'error')
+        elif username in current_app.config['ADMIN_JUDGES']:
+            flash('Questo nome utente non è disponibile.', 'error')
+        else:
+            db = get_db()
+            taken = db.execute(
+                'SELECT 1 FROM players WHERE username = ?',
+                (username,),
+            ).fetchone()
+            if taken:
+                flash('Questo nome utente è già in uso.', 'error')
+            elif db.execute('SELECT 1 FROM players WHERE name = ?', (name,)).fetchone():
+                flash('Questo nome in classifica è già usato. Scegline un altro.', 'error')
+            else:
+                try:
+                    db.execute(
+                        'INSERT INTO players (name, username, password_hash) VALUES (?, ?, ?)',
+                        (name, username, generate_password_hash(password)),
+                    )
+                    db.commit()
+                    row = db.execute('SELECT id FROM players WHERE username = ?', (username,)).fetchone()
+                    session.pop('is_admin', None)
+                    session.permanent = True
+                    session['player_id'] = row['id']
+                    flash('Registrazione completata. Benvenuto in classifica.', 'success')
+                    return redirect(url_for('user.news'))
+                except sqlite3.IntegrityError:
+                    db.rollback()
+                    flash('Nome utente o nome in classifica già esistente.', 'error')
+    return render_template('user/register.html')
 
 
 @bp.route('/login', methods=['GET', 'POST'])

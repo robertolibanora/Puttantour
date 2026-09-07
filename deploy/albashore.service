@@ -1,0 +1,17 @@
+[Unit]
+Description=ALBASHORE Flask App
+After=network.target
+
+[Service]
+User=noira
+Group=www-data
+WorkingDirectory=/var/www/AlbaShore
+EnvironmentFile=/var/www/AlbaShore/.env
+Environment=TZ=Europe/Rome
+ExecStart=/var/www/AlbaShore/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8998 run:app
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

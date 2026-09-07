@@ -1,27 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --sil-alabaster: #d8e2dc;
-  --sil-powder: #ffe5d9;
-  --sil-pink: #ffcad4;
-  --sil-cherry: #f4acb7;
-  --sil-mauve: #9d8189;
-  --sil-ink: #3a262c;
-  --sil-ink-soft: #6e555c;
-  --sil-cream: #fbf2ec;
-  --sil-paper: #ffffff;
-  --sil-hairline: rgba(157, 129, 137, 0.22);
-  --sil-hairline-soft: rgba(157, 129, 137, 0.12);
+  --sil-alabaster: #e7ddc6;
+  --sil-powder: #f4e7cd;
+  --sil-pink: #eed7a8;
+  --sil-cherry: #e1bb80;
+  --sil-mauve: #7b6b43;
+  --sil-ink: #352208;
+  --sil-ink-soft: #685634;
+  --sil-cream: #faf4e9;
+  --sil-paper: #fffdf8;
+  --sil-hairline: rgba(123, 107, 67, 0.24);
+  --sil-hairline-soft: rgba(123, 107, 67, 0.13);
   --sil-danger: #a8384b;
-  --sil-bg: #f1ebe6;
+  --sil-bg: #efe7d6;
   --sil-accent: var(--sil-cherry);
   --sil-serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
   --sil-sans: "Geist", "Inter Tight", system-ui, sans-serif;
   --sil-mono: "JetBrains Mono", ui-monospace, monospace;
   --sil-dock-h: 88px;
   --sil-header-h: 72px;
-  --sil-shadow-panel: 0 12px 28px rgba(157, 129, 137, 0.12);
-  --sil-shadow-dock: 0 12px 28px rgba(157, 129, 137, 0.18), 0 2px 6px rgba(157, 129, 137, 0.08);
+  --sil-shadow-panel: 0 12px 28px rgba(53, 34, 8, 0.12);
+  --sil-shadow-dock: 0 12px 28px rgba(53, 34, 8, 0.18), 0 2px 6px rgba(53, 34, 8, 0.08);
 }
 
 *,
@@ -843,7 +843,7 @@ a.sil-row:hover {
 .sil-profile-card__score {
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 0.5px solid rgba(157, 129, 137, 0.33);
+  border-top: 0.5px solid rgba(123, 107, 67, 0.33);
   display: flex;
   align-items: baseline;
   gap: 8px;

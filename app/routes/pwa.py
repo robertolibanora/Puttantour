@@ -4,8 +4,8 @@ from flask import Blueprint, Response, current_app, render_template, send_from_d
 
 bp = Blueprint('pwa', __name__)
 
-THEME_COLOR = '#f4acb7'
-BACKGROUND_COLOR = '#f1ebe6'
+THEME_COLOR = '#e1bb80'
+BACKGROUND_COLOR = '#efe7d6'
 
 
 @bp.route('/manifest.webmanifest')
